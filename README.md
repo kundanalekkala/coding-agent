@@ -150,16 +150,6 @@ This is **not** a SWE-bench or HumanEval score. It's a small, repeatable baselin
 
 ---
 
-## Key design decisions
-
-**Why plan before coding?** Planning forces the LLM to consider edge cases up front, which tends to reduce fix iterations, much like test-driven development reduces bugs.
-
-**Why Docker over a bare subprocess?** A subprocess is isolated from the parent process, but generated code can still touch the filesystem or network. A container with `--network none` and resource limits closes both off, at the cost of needing Docker and a small startup overhead.
-
-**Why tests in the same file?** The LLM sees the implementation and its tests together when fixing a failure, which produces more targeted fixes.
-
----
-
 ## Tech stack
 
 - **LangGraph:** execution graph with the conditional fix loop
@@ -170,20 +160,3 @@ This is **not** a SWE-bench or HumanEval score. It's a small, repeatable baselin
 
 ---
 
-## Known limitations
-
-- Single-file solutions only: no multi-file projects or dependencies beyond the standard library and pytest.
-- The benchmark is small (5 tasks) and hand-picked, not a standard benchmark.
-- "Passed" means pytest's exit code is 0. There's no check for code quality, style, or efficiency beyond what the tests cover.
-
----
-
-## Roadmap
-
-- Multi-file project support
-- Run benchmarks on HumanEval / SWE-bench Lite subsets
-- Static analysis (lint/type checks) as an extra pass criterion
-
-## License
-
-Add a LICENSE file (MIT is a common choice) and reference it here.
